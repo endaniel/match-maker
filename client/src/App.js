@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component {
   componentDidMount(){
-    fetch('http://localhost:5000/api/a/5')
+    fetch('api/user/5')
       .then(res => {
         let a = res
       })
