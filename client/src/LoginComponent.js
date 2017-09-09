@@ -1,12 +1,10 @@
 import React from 'react';
-import FacebookLogin from 'react-facebook-login';
 import { Redirect } from 'react-router-dom';
 
 class LoginComponent extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {loggedIn: false};
         this.statusChangedCallback = this.statusChangedCallback.bind(this);
     }
 

@@ -9,11 +9,12 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('/api/user/:id', (req, res) => { 
     MongoClient.connect(dbUri, (err, db) => {
-        db.collection("user_settings").find({_id: req.params.id}).toArray((err, result) => {
-            if (err) throw err;
-            res.json(result);
-            db.close();
-        })
+        db.collection("user_settings").findAndModify({_id: req.params.id}, null, {$setOnInsert:{settings: {}}},  {new:true, upsert:true}, 
+                               (err, result) => {
+                                    if (err) throw err;
+                                    res.json(result.value);
+                                    db.close();
+                                })
     })
 })
 
