@@ -1,5 +1,5 @@
 import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
+import {Link, Switch, Redirect, Route} from 'react-router-dom';
 import Matching from './Matching';
 import ReactLoading from 'react-loading';
 import './Home.css'
@@ -16,21 +16,12 @@ class Home extends React.Component{
         this.setState({fbProfile: response});
     }
 
-    setUserAppSettings(response){
-        
-    }
-
     componentDidMount(){
         window.FB.api('/me/?fields=id,name,picture', this.setUserFacebookProfile);
-        fetch('/api/user/' + this.props.facebookUserId)
-        .then(function(response){
-            var a = response;
-        })
-
     }
 
     render(){
-        if(!this.props.isAutho){
+        if(!this.props.facebookUserId){
             <Redirect push to="/unauthorized"/>
         }
         return(
@@ -38,8 +29,13 @@ class Home extends React.Component{
                 {this.state.fbProfile.name ?
                     <div>
                         <h1>Hello {this.state.fbProfile.name}</h1> 
-                        <img src={this.state.fbProfile.picture.data.url}/> 
-                        <Matching currentUser={this.state.fbProfile}/> 
+                        <img src={this.state.fbProfile.picture.data.url}/>
+                        <Link to="/match">Match</Link>
+                        <Link to="/search">Search</Link>
+                        <Switch>
+                            <Route path="/match" render={() => <Matching currentUser={this.state.fbProfile}/>}/>
+                        </Switch> 
+                         
                     </div> :
                     <ReactLoading type="spinningBubbles" className="center" color="#444" height="100px" width="100px"/>
                     }

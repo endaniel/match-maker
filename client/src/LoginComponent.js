@@ -34,10 +34,10 @@ class LoginComponent extends React.Component {
 
       statusChangedCallback(response) {
         if(response.authResponse){
-            this.props.updatePermission(true, response.authResponse.userID);
+            this.props.updatePermission(response.authResponse.userID);
         }
         else{
-            this.props.updatePermission(false);
+            this.props.updatePermission(0);
         }
     }
 
